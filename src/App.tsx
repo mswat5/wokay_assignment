@@ -21,7 +21,7 @@ function App() {
 
           <main className="p-6 space-y-6">
             <div className="grid grid-cols-2 gap-6">
-              <div className="h-full">
+              <div className="h-full flex flex-col">
                 <AIExecutiveSummary />
               </div>
               <div className="space-y-6">
