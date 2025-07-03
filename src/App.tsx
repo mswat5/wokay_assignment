@@ -11,16 +11,15 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-      <SecondaryHeader />
 
       <div className="flex">
         <Sidebar />
 
         <div className="flex-1">
+          <SecondaryHeader />
           <DashboardControls />
 
           <main className="p-6 space-y-6">
-            {/* First row: AI Executive Summary on the left, TaskStatusOverview and WorkloadChart on the right */}
             <div className="grid grid-cols-2 gap-6">
               <div className="h-full">
                 <AIExecutiveSummary />
@@ -31,7 +30,6 @@ function App() {
               </div>
             </div>
 
-            {/* Second row: TaskCharts (already spanning full width) */}
             <TaskCharts />
           </main>
         </div>
