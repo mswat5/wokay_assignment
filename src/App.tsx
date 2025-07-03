@@ -16,13 +16,22 @@ function App() {
       <div className="flex">
         <Sidebar />
 
-        <div className="flex-1 ">
+        <div className="flex-1">
           <DashboardControls />
 
           <main className="p-6 space-y-6">
-            <AIExecutiveSummary />
-            <TaskStatusOverview />
-            <WorkloadChart />
+            {/* First row: AI Executive Summary on the left, TaskStatusOverview and WorkloadChart on the right */}
+            <div className="grid grid-cols-2 gap-6">
+              <div className="h-full">
+                <AIExecutiveSummary />
+              </div>
+              <div className="space-y-6">
+                <TaskStatusOverview />
+                <WorkloadChart />
+              </div>
+            </div>
+
+            {/* Second row: TaskCharts (already spanning full width) */}
             <TaskCharts />
           </main>
         </div>

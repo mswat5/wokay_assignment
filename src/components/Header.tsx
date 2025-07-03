@@ -12,22 +12,19 @@ const Header = () => {
   return (
     <header className="bg-teal-700 text-white">
       <div className="flex items-center justify-between px-4 py-2">
-        <div className="flex items-center space-x-4">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-white rounded-sm flex items-center justify-center">
-              <div className="w-5 h-5 bg-teal-700 rounded-sm"></div>
-            </div>
-            <span className="font-bold text-lg">ClickUp</span>
+        <div className="flex items-center space-x-2">
+          <div className="w-8 h-8 bg-white rounded-sm flex items-center justify-center">
+            <div className="w-5 h-5 bg-teal-700 rounded-sm"></div>
           </div>
+        </div>
 
-          <div className="flex items-center bg-teal-600 rounded-md px-3 py-1.5 w-80">
-            <Search className="w-4 h-4 text-teal-300 mr-2" />
-            <input
-              type="text"
-              placeholder="Search..."
-              className="bg-transparent text-white placeholder-teal-300 outline-none w-full"
-            />
-          </div>
+        <div className="flex items-center bg-teal-600 rounded-md px-3 py-1.5 w-80">
+          <Search className="w-4 h-4 text-teal-300 mr-2" />
+          <input
+            type="text"
+            placeholder="Search..."
+            className="bg-transparent text-white placeholder-teal-300 outline-none w-full"
+          />
         </div>
 
         <div className="flex items-center space-x-3">
