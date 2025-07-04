@@ -17,6 +17,9 @@ import {
   Plus,
   UserPlus,
   HelpCircle,
+  SeparatorVertical,
+  SeparatorVerticalIcon,
+  LucideSeparatorVertical,
 } from "lucide-react";
 
 const Sidebar = () => {
@@ -38,7 +41,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="w-64 bg-gray-50 h-screen border-r border-gray-200 flex flex-col">
+    <div className="w-64 bg-gray-50 h-full border-r border-gray-200 flex flex-col flex-shrink-0">
       <div className="p-4 border-b border-gray-200">
         <div className="flex items-center space-x-3">
           <div className="w-8 h-8 bg-teal-600 rounded-full flex items-center justify-center text-white font-semibold text-sm">
@@ -46,9 +49,8 @@ const Sidebar = () => {
           </div>
           <div className="flex-1">
             <div className="flex items-center space-x-1">
-              {/* TODO: yaha pe text clipper type kux rhta css me wo lgana hai jese lyfelynk app me kia */}
-              <span className="text-sm font-medium text-gray-900">
-                Swatantra mi...
+              <span className="text-sm font-medium text-gray-900 truncate">
+                Swatantra mishra
               </span>
               <ChevronDown className="w-4 h-4 text-gray-500" />
             </div>
@@ -56,7 +58,7 @@ const Sidebar = () => {
         </div>
       </div>
 
-      <nav className="flex-1 p-4 space-y-1">
+      <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
         {menuItems.map((item, index) => (
           <a
             key={index}
@@ -128,15 +130,18 @@ const Sidebar = () => {
         </div>
       </nav>
 
-      <div className="p-4 border-t border-gray-200 space-y-2">
-        <button className="flex items-center space-x-2 w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md transition-colors">
-          <UserPlus className="w-4 h-4" />
-          <span>Invite</span>
-        </button>
-        <button className="flex items-center space-x-2 w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md transition-colors">
-          <HelpCircle className="w-4 h-4" />
-          <span>Help</span>
-        </button>
+      <div className="p-2 border-t border-gray-200 mt-auto">
+        <div className="flex space-x-2 items-center">
+          <button className="flex items-center justify-center space-x-2 flex-1 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md transition-colors">
+            <UserPlus className="w-4 h-4" />
+            <span>Invite</span>
+          </button>
+          <div className="w-px h-6 bg-gray-300 "></div>
+          <button className="flex items-center justify-center space-x-2 flex-1 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md transition-colors">
+            <HelpCircle className="w-4 h-4" />
+            <span>Help</span>
+          </button>
+        </div>
       </div>
     </div>
   );

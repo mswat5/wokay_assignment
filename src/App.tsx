@@ -9,17 +9,17 @@ import TaskCharts from "./components/TaskCharts";
 
 function App() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="h-screen bg-gray-50 flex flex-col">
       <Header />
 
-      <div className="flex">
+      <div className="flex flex-1 overflow-hidden">
         <Sidebar />
 
-        <div className="flex-1">
+        <div className="flex-1 flex flex-col overflow-hidden">
           <SecondaryHeader />
           <DashboardControls />
 
-          <main className="p-6 space-y-6">
+          <main className="flex-1 overflow-y-auto p-6 space-y-6">
             <div className="grid grid-cols-2 gap-6">
               <div className="h-full flex flex-col">
                 <AIExecutiveSummary />
