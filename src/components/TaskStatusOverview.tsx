@@ -1,21 +1,21 @@
 import { useState, useEffect } from "react";
 import { Clock, CheckCircle, AlertCircle, TrendingUp } from "lucide-react";
+import { motion } from "framer-motion";
 
 const TaskStatusOverview = () => {
   const [animateNumbers, setAnimateNumbers] = useState(false);
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
   const statusData = [
     { 
       label: "Unassigned", 
       count: 8, 
-      color: "bg-orange-50 border-orange-200", 
-      textColor: "text-orange-700",
-      numberColor: "text-orange-600",
+      color: "bg-gray-50 border-gray-200", 
+      textColor: "text-gray-700",
+      numberColor: "text-gray-900",
       icon: AlertCircle,
-      iconColor: "text-orange-500",
+      iconColor: "text-gray-500",
       trend: "+2 from yesterday",
-      trendColor: "text-orange-600"
+      trendColor: "text-gray-600"
     },
     { 
       label: "In Progress", 
@@ -42,7 +42,6 @@ const TaskStatusOverview = () => {
   ];
 
   useEffect(() => {
-    // Trigger number animation on mount
     const timer = setTimeout(() => setAnimateNumbers(true), 100);
     return () => clearTimeout(timer);
   }, []);
@@ -66,7 +65,7 @@ const TaskStatusOverview = () => {
       }, 50);
 
       return () => clearInterval(timer);
-    }, [target]); // Remove animateNumbers from dependencies
+    }, [target]);
 
     return (
       <div className={className}>
@@ -76,50 +75,47 @@ const TaskStatusOverview = () => {
   };
 
   return (
-    <div className="grid grid-cols-3 gap-6">
+    <div className="grid grid-cols-3 gap-4">
       {statusData.map((status, index) => {
         const IconComponent = status.icon;
         return (
-          <div
+          <motion.div
             key={index}
-            className={`bg-white rounded-xl border-2 p-6 text-center transition-all duration-300 cursor-pointer transform hover:scale-105 hover:shadow-lg ${
-              status.color
-            } ${hoveredCard === index ? 'shadow-xl' : 'shadow-sm'}`}
-            onMouseEnter={() => setHoveredCard(index)}
-            onMouseLeave={() => setHoveredCard(null)}
+            whileHover={{ y: -2 }}
+            className={`bg-white rounded-lg border p-6 text-center transition-all duration-200 cursor-pointer hover:shadow-md ${status.color}`}
           >
             <div className="flex items-center justify-between mb-3">
-              <h3 className={`text-sm font-semibold ${status.textColor}`}>
+              <h3 className={`text-sm font-medium ${status.textColor}`}>
                 {status.label}
               </h3>
-              <IconComponent className={`w-5 h-5 ${status.iconColor}`} />
+              <IconComponent className={`w-4 h-4 ${status.iconColor}`} />
             </div>
             
             <CountUpAnimation 
               target={status.count}
-              className={`text-4xl font-bold mb-2 ${status.numberColor}`}
+              className={`text-4xl font-bold mb-1 ${status.numberColor}`}
             />
             
             <div className="text-sm text-gray-500 mb-2">tasks</div>
             
-            <div className={`flex items-center justify-center text-xs ${status.trendColor} opacity-80`}>
+            <div className={`flex items-center justify-center text-xs ${status.trendColor}`}>
               <TrendingUp className="w-3 h-3 mr-1" />
               {status.trend}
             </div>
             
-            {/* Progress bar */}
-            <div className="mt-4 w-full bg-gray-200 rounded-full h-2">
-              <div 
-                className={`h-2 rounded-full transition-all duration-1000 ease-out ${
-                  status.label === "Unassigned" ? "bg-orange-400" :
+            {/* Simple progress indicator */}
+            <div className="mt-3 w-full bg-gray-200 rounded-full h-1">
+              <motion.div 
+                initial={{ width: 0 }}
+                animate={{ width: animateNumbers ? `${(status.count / 44) * 100}%` : '0%' }}
+                transition={{ duration: 1, delay: 0.2 }}
+                className={`h-1 rounded-full ${
+                  status.label === "Unassigned" ? "bg-gray-400" :
                   status.label === "In Progress" ? "bg-blue-400" : "bg-green-400"
                 }`}
-                style={{ 
-                  width: animateNumbers ? `${(status.count / 44) * 100}%` : '0%'
-                }}
               />
             </div>
-          </div>
+          </motion.div>
         );
       })}
     </div>

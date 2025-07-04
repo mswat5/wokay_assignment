@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { RefreshCw, Filter, Plus, Settings, Eye, EyeOff, Clock } from "lucide-react";
+import { RefreshCw, Filter, Plus, ChevronDown } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const DashboardControls = () => {
   const [editMode, setEditMode] = useState(false);
@@ -11,7 +12,6 @@ const DashboardControls = () => {
 
   const handleRefresh = () => {
     setIsRefreshing(true);
-    // Simulate refresh
     setTimeout(() => {
       setIsRefreshing(false);
       setLastRefresh("just now");
@@ -37,32 +37,32 @@ const DashboardControls = () => {
   }, [autoRefresh]);
 
   return (
-    <div className="bg-white border-b border-gray-200 px-6 py-4 shadow-sm">
+    <div className="bg-white border-b border-gray-200 px-6 py-4">
       <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-8">
+        <div className="flex items-center space-x-6">
           {/* Edit Mode Toggle */}
           <div className="flex items-center space-x-3">
-            <div className="flex items-center space-x-2">
-              {editMode ? <Eye className="w-4 h-4 text-teal-600" /> : <EyeOff className="w-4 h-4 text-gray-400" />}
-              <span className="text-sm font-medium text-gray-700">Edit mode:</span>
-            </div>
+            <span className="text-sm text-gray-600">Edit mode:</span>
             <button
               onClick={() => setEditMode(!editMode)}
-              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 ${
-                editMode ? "bg-gradient-to-r from-teal-500 to-teal-600 shadow-lg" : "bg-gray-200 hover:bg-gray-300"
+              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                editMode ? "bg-teal-600" : "bg-gray-200"
               }`}
             >
-              <span
-                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-all duration-300 shadow-md ${
-                  editMode ? "translate-x-6 scale-110" : "translate-x-1"
-                }`}
+              <motion.span
+                animate={{ x: editMode ? 24 : 4 }}
+                transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                className="inline-block h-4 w-4 transform rounded-full bg-white"
               />
-              {editMode && (
-                <div className="absolute inset-0 rounded-full bg-teal-400 opacity-20 animate-ping"></div>
-              )}
             </button>
             {editMode && (
-              <span className="text-xs text-teal-600 font-medium animate-pulse">Active</span>
+              <motion.span 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-xs text-teal-600 font-medium"
+              >
+                Active
+              </motion.span>
             )}
           </div>
 
@@ -78,29 +78,21 @@ const DashboardControls = () => {
             </button>
 
             {/* Auto Refresh Toggle */}
-            <div className="flex items-center space-x-3">
-              <div className="flex items-center space-x-2">
-                <Clock className="w-4 h-4 text-gray-400" />
-                <span className="text-sm font-medium text-gray-700">Auto refresh:</span>
-              </div>
+            <div className="flex items-center space-x-2">
+              <span className="text-sm text-gray-600">Auto refresh:</span>
               <button
                 onClick={() => setAutoRefresh(!autoRefresh)}
-                className={`relative inline-flex h-5 w-9 items-center rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 ${
-                  autoRefresh ? "bg-gradient-to-r from-teal-500 to-teal-600 shadow-md" : "bg-gray-200 hover:bg-gray-300"
+                className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${
+                  autoRefresh ? "bg-teal-600" : "bg-gray-200"
                 }`}
               >
-                <span
-                  className={`inline-block h-3 w-3 transform rounded-full bg-white transition-all duration-300 shadow-sm ${
-                    autoRefresh ? "translate-x-5 scale-110" : "translate-x-1"
-                  }`}
+                <motion.span
+                  animate={{ x: autoRefresh ? 20 : 4 }}
+                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                  className="inline-block h-3 w-3 transform rounded-full bg-white"
                 />
-                {autoRefresh && (
-                  <div className="absolute inset-0 rounded-full bg-teal-400 opacity-20 animate-pulse"></div>
-                )}
               </button>
-              <span className={`text-sm font-medium transition-colors ${
-                autoRefresh ? 'text-teal-600' : 'text-gray-500'
-              }`}>
+              <span className={`text-sm ${autoRefresh ? 'text-teal-600' : 'text-gray-500'}`}>
                 {autoRefresh ? 'On' : 'Off'}
               </span>
             </div>
@@ -109,73 +101,82 @@ const DashboardControls = () => {
             <div className="relative">
               <button 
                 onClick={() => setShowFilters(!showFilters)}
-                className="flex items-center space-x-2 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-all duration-200 hover:shadow-sm border border-gray-200"
+                className="flex items-center space-x-2 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 rounded-md transition-colors border border-gray-200"
               >
                 <Filter className="w-4 h-4" />
                 <span>Filters</span>
+                <ChevronDown className={`w-3 h-3 transition-transform ${showFilters ? 'rotate-180' : ''}`} />
                 {filterCount > 0 && (
-                  <span className="bg-teal-600 text-white text-xs rounded-full px-1.5 py-0.5 min-w-[20px] text-center">
+                  <span className="bg-teal-600 text-white text-xs rounded-full px-1.5 py-0.5 min-w-[16px] text-center">
                     {filterCount}
                   </span>
                 )}
               </button>
 
               {/* Filter Dropdown */}
-              {showFilters && (
-                <div className="absolute top-full left-0 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg z-10 p-4">
-                  <h4 className="font-medium text-gray-900 mb-3">Filter Options</h4>
-                  <div className="space-y-2">
-                    {['Status', 'Assignee', 'Priority', 'Date'].map((filter) => (
-                      <label key={filter} className="flex items-center space-x-2 cursor-pointer">
-                        <input 
-                          type="checkbox" 
-                          className="rounded border-gray-300 text-teal-600 focus:ring-teal-500"
-                          onChange={() => toggleFilter()}
-                        />
-                        <span className="text-sm text-gray-700">{filter}</span>
-                      </label>
-                    ))}
-                  </div>
-                  <button 
-                    onClick={() => setShowFilters(false)}
-                    className="mt-3 w-full px-3 py-1.5 bg-teal-600 text-white rounded-md text-sm hover:bg-teal-700 transition-colors"
+              <AnimatePresence>
+                {showFilters && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="absolute top-full left-0 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg z-10 p-4"
                   >
-                    Apply Filters
-                  </button>
-                </div>
-              )}
+                    <h4 className="font-medium text-gray-900 mb-3">Filter Options</h4>
+                    <div className="space-y-2">
+                      {['Status', 'Assignee', 'Priority', 'Date'].map((filter) => (
+                        <label key={filter} className="flex items-center space-x-2 cursor-pointer">
+                          <input 
+                            type="checkbox" 
+                            className="rounded border-gray-300 text-teal-600 focus:ring-teal-500"
+                            onChange={() => toggleFilter()}
+                          />
+                          <span className="text-sm text-gray-700">{filter}</span>
+                        </label>
+                      ))}
+                    </div>
+                    <button 
+                      onClick={() => setShowFilters(false)}
+                      className="mt-3 w-full px-3 py-1.5 bg-teal-600 text-white rounded-md text-sm hover:bg-teal-700 transition-colors"
+                    >
+                      Apply Filters
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
         </div>
 
         {/* Add Card Button */}
-        <div className="flex items-center space-x-3">
-          <button className="flex items-center space-x-2 px-3 py-1.5 text-gray-600 hover:text-gray-800 transition-colors">
-            <Settings className="w-4 h-4" />
-          </button>
-          
-          <button className="flex items-center space-x-2 bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105">
-            <Plus className="w-4 h-4" />
-            <span>Add Card</span>
-          </button>
-        </div>
+        <button className="flex items-center space-x-2 bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
+          <Plus className="w-4 h-4" />
+          <span>Add card</span>
+        </button>
       </div>
 
       {/* Active filters display */}
-      {filterCount > 0 && (
-        <div className="mt-3 flex items-center space-x-2">
-          <span className="text-sm text-gray-600">Active filters:</span>
-          <span className="bg-teal-100 text-teal-800 px-2 py-1 rounded-md text-xs font-medium">
-            Status: In Progress
-          </span>
-          <button 
-            onClick={() => setFilterCount(0)}
-            className="text-gray-400 hover:text-gray-600 text-xs"
+      <AnimatePresence>
+        {filterCount > 0 && (
+          <motion.div 
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="mt-3 flex items-center space-x-2"
           >
-            Clear all
-          </button>
-        </div>
-      )}
+            <span className="text-sm text-gray-600">Active filters:</span>
+            <span className="bg-teal-100 text-teal-800 px-2 py-1 rounded-md text-xs font-medium">
+              Status: In Progress
+            </span>
+            <button 
+              onClick={() => setFilterCount(0)}
+              className="text-gray-400 hover:text-gray-600 text-xs"
+            >
+              Clear all
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

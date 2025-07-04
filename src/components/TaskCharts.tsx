@@ -12,6 +12,7 @@ import {
   LineChart,
   Line,
 } from "recharts";
+import { motion } from "framer-motion";
 
 const TaskCharts = () => {
   const [activeIndex, setActiveIndex] = useState(-1);
@@ -19,7 +20,7 @@ const TaskCharts = () => {
 
   const pieData = [
     { name: "Assigned", value: 65, color: "#10B981" },
-    { name: "Unassigned", value: 35, color: "#EF4444" },
+    { name: "Unassigned", value: 35, color: "#9CA3AF" },
   ];
 
   const barData = [
@@ -72,15 +73,15 @@ const TaskCharts = () => {
 
   return (
     <div className="grid grid-cols-3 gap-6">
-      {/* Enhanced Pie Chart */}
-      <div 
-        className={`bg-white rounded-xl border border-gray-200 p-6 transition-all duration-300 hover:shadow-lg hover:border-gray-300 cursor-pointer ${
+      {/* Pie Chart */}
+      <motion.div 
+        whileHover={{ y: -2 }}
+        className={`bg-white rounded-lg border border-gray-200 p-6 transition-all duration-200 hover:shadow-md cursor-pointer ${
           selectedChart === 'pie' ? 'ring-2 ring-teal-500' : ''
         }`}
         onClick={() => setSelectedChart(selectedChart === 'pie' ? null : 'pie')}
       >
-        <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-          <span className="w-3 h-3 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full mr-3"></span>
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">
           Total Tasks by Assignee
         </h3>
         <div className="h-40">
@@ -103,12 +104,6 @@ const TaskCharts = () => {
                     fill={entry.color}
                     stroke={activeIndex === pieData.indexOf(entry) ? "#374151" : "none"}
                     strokeWidth={activeIndex === pieData.indexOf(entry) ? 2 : 0}
-                    style={{
-                      filter: activeIndex === pieData.indexOf(entry) ? "brightness(1.1)" : "none",
-                      transform: activeIndex === pieData.indexOf(entry) ? "scale(1.05)" : "scale(1)",
-                      transformOrigin: "center",
-                      transition: "all 0.2s ease-in-out",
-                    }}
                   />
                 ))}
               </Pie>
@@ -127,17 +122,17 @@ const TaskCharts = () => {
             </div>
           ))}
         </div>
-      </div>
+      </motion.div>
 
-      {/* Enhanced Bar Chart */}
-      <div 
-        className={`bg-white rounded-xl border border-gray-200 p-6 transition-all duration-300 hover:shadow-lg hover:border-gray-300 cursor-pointer ${
+      {/* Bar Chart */}
+      <motion.div 
+        whileHover={{ y: -2 }}
+        className={`bg-white rounded-lg border border-gray-200 p-6 transition-all duration-200 hover:shadow-md cursor-pointer ${
           selectedChart === 'bar' ? 'ring-2 ring-teal-500' : ''
         }`}
         onClick={() => setSelectedChart(selectedChart === 'bar' ? null : 'bar')}
       >
-        <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-          <span className="w-3 h-3 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-full mr-3"></span>
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">
           Open Tasks by Assignee
         </h3>
         <div className="text-sm text-gray-500 mb-3">Active Tasks</div>
@@ -161,9 +156,6 @@ const TaskCharts = () => {
                 dataKey="value" 
                 fill="#3B82F6"
                 radius={[4, 4, 0, 0]}
-                style={{
-                  filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.1))"
-                }}
               />
             </BarChart>
           </ResponsiveContainer>
@@ -177,17 +169,17 @@ const TaskCharts = () => {
             </div>
           ))}
         </div>
-      </div>
+      </motion.div>
 
-      {/* Enhanced Line Chart - Instead of empty third chart */}
-      <div 
-        className={`bg-white rounded-xl border border-gray-200 p-6 transition-all duration-300 hover:shadow-lg hover:border-gray-300 cursor-pointer ${
+      {/* Line Chart */}
+      <motion.div 
+        whileHover={{ y: -2 }}
+        className={`bg-white rounded-lg border border-gray-200 p-6 transition-all duration-200 hover:shadow-md cursor-pointer ${
           selectedChart === 'line' ? 'ring-2 ring-teal-500' : ''
         }`}
         onClick={() => setSelectedChart(selectedChart === 'line' ? null : 'line')}
       >
-        <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-          <span className="w-3 h-3 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full mr-3"></span>
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">
           Weekly Task Completion
         </h3>
         <div className="text-sm text-gray-500 mb-3">Last 7 days</div>
@@ -217,10 +209,10 @@ const TaskCharts = () => {
               <Line 
                 type="monotone" 
                 dataKey="pending" 
-                stroke="#F59E0B" 
+                stroke="#9CA3AF" 
                 strokeWidth={2}
                 strokeDasharray="5 5"
-                dot={{ fill: '#F59E0B', strokeWidth: 2, r: 3 }}
+                dot={{ fill: '#9CA3AF', strokeWidth: 2, r: 3 }}
               />
             </LineChart>
           </ResponsiveContainer>
@@ -231,11 +223,11 @@ const TaskCharts = () => {
             <span className="text-gray-600">Completed</span>
           </div>
           <div className="flex items-center text-sm">
-            <div className="w-3 h-3 bg-yellow-500 rounded-full mr-2"></div>
+            <div className="w-3 h-3 bg-gray-500 rounded-full mr-2"></div>
             <span className="text-gray-600">Pending</span>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

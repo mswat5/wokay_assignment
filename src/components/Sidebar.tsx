@@ -38,7 +38,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="w-64 bg-gray-50 h-screen border-r border-gray-200 flex flex-col">
+    <div className="w-64 bg-gray-50 h-full border-r border-gray-200 flex flex-col flex-shrink-0">
       <div className="p-4 border-b border-gray-200">
         <div className="flex items-center space-x-3">
           <div className="w-8 h-8 bg-teal-600 rounded-full flex items-center justify-center text-white font-semibold text-sm">
